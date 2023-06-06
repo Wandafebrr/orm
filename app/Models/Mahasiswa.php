@@ -19,9 +19,11 @@ protected $table="mahasiswas"; // Eloquent akan membuat model mahasiswa menyimpa
 protected $fillable = [
     'Nim',
     'Nama',
+    'ttl',
     'Kelas',
     'Jurusan',
     'No_Handphone',
+    'Email'
     ];
 
 };

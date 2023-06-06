@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('Nim');
             $table->string('Nama');
+            $table->date('ttl');
             $table->string('Kelas');
             $table->string('Jurusan');
             $table->string('No_Handphone');
+            $table->string('Email');
             $table->timestamps();
         });
     }

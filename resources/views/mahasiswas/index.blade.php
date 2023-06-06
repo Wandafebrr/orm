@@ -11,6 +11,18 @@
  </div>
  </div>
 
+ <form action="{{route('mahasiswa.index')}}" method="GET" role="search">
+    <div class="input-group">
+        <div class="form-outline">
+            <input type="search" class="form-control" name="key" placeholder="Cari Nama Mahasiswa">
+        </div>
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+    </div>
+</form>
+
+
  @if ($message = Session::get('success'))
  <div class="alert alert-success">
  <p>{{ $message }}</p>

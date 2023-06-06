@@ -10,11 +10,16 @@ class MahasiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-      //fungsi eloquent menampilkan data menggunakan pagination
-        $mahasiswas = Mahasiswa::orderBy('Nim', 'asc')->paginate(5); // Mengambil semua isi tabel
-        // $posts = Mahasiswa::orderBy('Nim', 'desc')->paginate(6);
+
+        //search
+        if($request->has('key')){
+                    $mahasiswas = Mahasiswa::where('Nama','Like','%'.$request->key.'%')->paginate(5);
+                }else{
+                    $mahasiswas = Mahasiswa::all();
+                    $mahasiswas = Mahasiswa::orderBy('Nim', 'asc')->paginate(5);
+                }
         $i = (request()->input('page', 1) - 1) * 6;
         return view('mahasiswas.index', compact('mahasiswas', 'i'));
     }
@@ -103,4 +108,17 @@ class MahasiswaController extends Controller
         Mahasiswa::find($id)->delete();
         return redirect()->route('mahasiswa.index')-> with('success', 'Mahasiswa Berhasil Dihapus');
     }
+
+    // public function search(Request $request){
+    //     $key = $request->input('key');
+    //     $mahasiswas = Mahasiswa::where('Nama','LIKE','%'. $key . '%')->get();
+    //     return view('mahasiswas.index',compact('Mahasiswa'));
+    //     if($request->has('search')){
+    //         $mahasiswas = Mahasiswa::where('Nama','Like','%'.$request->search.'%')->paginate(5);
+    //     }else{
+    //         $mahasiswas = Mahasiswa::all();
+    //         $mahasiswas = Mahasiswa::orderBy('Nim', 'desc')->paginate(5);
+    //     }
+
+    // }
 };

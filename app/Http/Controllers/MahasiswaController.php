@@ -118,17 +118,9 @@ class MahasiswaController extends Controller
         Mahasiswa::find($Nim)->delete();
         return redirect()->route('mahasiswa.index')-> with('success', 'Mahasiswa Berhasil Dihapus');
     }
-
-    // public function search(Request $request){
-    //     $key = $request->input('key');
-    //     $mahasiswas = Mahasiswa::where('Nama','LIKE','%'. $key . '%')->get();
-    //     return view('mahasiswas.index',compact('Mahasiswa'));
-    //     if($request->has('search')){
-    //         $mahasiswas = Mahasiswa::where('Nama','Like','%'.$request->search.'%')->paginate(5);
-    //     }else{
-    //         $mahasiswas = Mahasiswa::all();
-    //         $mahasiswas = Mahasiswa::orderBy('Nim', 'desc')->paginate(5);
-    //     }
-
-    // }
+    public function nilai($Nim)
+    {
+        $Mahasiswa = Mahasiswa::with('kelas')->where('nim', $Nim)->first();
+            return view('mahasiswas.mahasiswa_nilai', ['Mahasiswa' => $Mahasiswa]);
+    }
 };

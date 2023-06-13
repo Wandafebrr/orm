@@ -38,7 +38,7 @@
  <th>Jurusan</th>
  <th>No_Handphone</th>
  <th>Email</th>
- <th width="280px">Action</th>
+ <th width="290px">Action</th>
  </tr>
  @foreach ($paginate as $Mahasiswa)
  <tr>
@@ -57,6 +57,7 @@
             <a class="btn btn-info" href="{{ route('mahasiswa.show',$Mahasiswa->id) }}">Show</a>
             <a class="btn btn-primary" href="{{ route('mahasiswa.edit',$Mahasiswa->id) }}">Edit</a>
             <button type="submit" class="btn btn-danger">Delete</button>
+            <a class="btn btn-warning" href="{{ route('mahasiswa.nilai', $Mahasiswa->Nim) }}">Nilai</a>
         </form>
     </td>
  </tr>

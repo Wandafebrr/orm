@@ -31,4 +31,7 @@ protected $table="mahasiswas"; // Eloquent akan membuat model mahasiswa menyimpa
 public function kelas(){
     return $this->belongsTo(Kelas::class,'kelas_id', 'id');
 }
+public function matakuliah(){
+        return $this->belongsToMany(Matakuliah::class, Mahasiswa_MataKuliah::class)->withPivot('nilai');
+    }
 };

@@ -20,7 +20,7 @@ class MahasiswaSeeder extends Seeder
                 'Nim' => $faker->numberBetween(0001, 9999),
                 'Nama' => $faker->name,
                 'ttl' => $faker->date,
-                'Kelas' => $faker->randomElement(['2A', '2B', '2C','1A','1B','1C','3A','3B']),
+                'kelas_id' => $faker->numberBetween(1,8),
                 'Jurusan' => $faker->randomElement(['Teknik Informatika', 'Sistem Informasi']),
                 'No_Handphone' => $faker->phoneNumber,
                 'Email' => $faker->unique()->email,

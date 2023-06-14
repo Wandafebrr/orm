@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\mahasiswaMatakuliah;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MataKuliah extends Model
 {
     use HasFactory;
     protected $table = 'matakuliah';
-    protected $primaryKey = 'id';
 
-    public function mahasiswa()
+    public function mahasiswaMatakuliah()
     {
-        return $this->belongsToMany(Mahasiswa::class);
+        return $this->hasMany(mahasiswaMatakuliah::class);
     }
 }

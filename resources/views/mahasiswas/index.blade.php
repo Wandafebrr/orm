@@ -54,10 +54,10 @@
         <form action="{{ route('mahasiswa.destroy',$Mahasiswa->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
-            <a class="btn btn-info" href="{{ route('mahasiswa.show',$Mahasiswa->id) }}">Show</a>
+            <a class="btn btn-info" href="{{ route('mahasiswa.show', $Mahasiswa) }}">Show</a>
             <a class="btn btn-primary" href="{{ route('mahasiswa.edit',$Mahasiswa->id) }}">Edit</a>
             <button type="submit" class="btn btn-danger">Delete</button>
-            <a class="btn btn-warning" href="{{ route('mahasiswa.nilai', $Mahasiswa->Nim) }}">Nilai</a>
+            <a class="btn btn-warning" href="{{ route('mahasiswa.nilai', $Mahasiswa) }}">Nilai</a>
         </form>
     </td>
  </tr>

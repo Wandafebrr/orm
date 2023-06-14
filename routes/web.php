@@ -19,4 +19,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::resource('mahasiswa', MahasiswaController::class);
-Route::get('mahasiswa/nilai/{Nim}', [MahasiswaController::class, 'nilai'])->name('mahasiswa.nilai');
+
+Route::get('mahasiswa/{mahasiswa}/nilai', [MahasiswaController::class, 'nilai'])->name('mahasiswa.nilai');

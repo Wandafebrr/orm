@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMahasiswaRequest;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Models\Kelas;
+use App\Models\Mahasiswa_MataKuliah;
 
 class MahasiswaController extends Controller
 {
@@ -22,7 +23,7 @@ class MahasiswaController extends Controller
                 }else{
                     //yang semua Mahasiswa::all, diubah menjadi with() yang menyatakan relasi
                     $mahasiswas = Mahasiswa::with('kelas')->paginate(2);
-                    $mahasiswas = Mahasiswa::orderBy('Nim', 'asc')->paginate(5);
+                    $mahasiswas = Mahasiswa::orderBy('id', 'asc')->paginate(5);
                 }
         // $i = (request()->input('page', 1) - 1) * 6;
         return view('mahasiswas.index', ['mahasiswas'=>$mahasiswas,'paginate'=>$mahasiswas]);
@@ -49,11 +50,11 @@ class MahasiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($Nim)
+    public function show(Mahasiswa $mahasiswa)
     {
-       //menampilkan detail data dengan menemukan/berdasarkan Nim Mahasiswa
-     $Mahasiswa = Mahasiswa::find($Nim);
-    return view('mahasiswas.detail', ['Mahasiswa'=>$Mahasiswa]);
+      //menampilkan detail data dengan menemukan/berdasarkan Nim Mahasiswa
+
+      return view('mahasiswas.detail', compact('mahasiswa'));
 
     }
 
@@ -118,9 +119,8 @@ class MahasiswaController extends Controller
         Mahasiswa::find($Nim)->delete();
         return redirect()->route('mahasiswa.index')-> with('success', 'Mahasiswa Berhasil Dihapus');
     }
-    public function nilai($Nim)
+    public function nilai(Mahasiswa $mahasiswa)
     {
-        $Mahasiswa = Mahasiswa::with('kelas')->where('nim', $Nim)->first();
-            return view('mahasiswas.mahasiswa_nilai', ['Mahasiswa' => $Mahasiswa]);
+        return view('mahasiswas.mahasiswa_nilai', compact('mahasiswa'));
     }
 };

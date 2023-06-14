@@ -1,4 +1,4 @@
-@extends('mahasiswa.layout')
+@extends('mahasiswas.layout')
 
 @section('content')
     <div class="row">
@@ -9,9 +9,9 @@
             </div>
         </div>
         <div class="text-left">
-            <p><b>Nama : </b>{{ $Mahasiswa->Nama }}</p>
-            <p><b>Nim  : </b>{{ $Mahasiswa->Nim }}</p>
-            <p><b>Kelas: </b>{{ $Mahasiswa->Kelas->nama_kelas }}</p>
+            <p><b>Nama : </b>{{ $mahasiswa->Nama }}</p>
+            <p><b>Nim  : </b>{{ $mahasiswa->Nim }}</p>
+            <p><b>Kelas: </b>{{ $mahasiswa->kelas->nama_kelas }}</p>
         </div>
 
         <table class="table table-bordered">
@@ -21,12 +21,12 @@
                 <th>Semester</th>
                 <th>Nilai</th>
             </tr>
-            @foreach ($Mahasiswa->Mahasiswa_MataKuliah as $nilai)
+            @foreach ($mahasiswa->mahasiswaMatakuliah as $item)
                 <tr>
-                    <td>{{ $nilai->matakuliah->nama_matkul }}</td>
-                    <td>{{ $nilai->matakuliah->sks }}</td>
-                    <td>{{ $nilai->matakuliah->semester }}</td>
-                    <td>{{ $nilai->nilai }}</td>
+                    <td>{{ $item->matakuliah->nama_matkul}}</td>
+                    <td>{{ $item->matakuliah->sks }}</td>
+                    <td>{{ $item->matakuliah->semester }}</td>
+                    <td>{{ $item->nilai }}</td>
                 </tr>
             @endforeach
         </table>

@@ -2,36 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Kelas;
+use App\Models\mahasiswaMatakuliah;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Mahasiswa extends Model
 {
-use HasFactory;
-protected $table="mahasiswas"; // Eloquent akan membuat model mahasiswa menyimpan record di tabel mahasiswas
-//  public $timestamps= false;
- protected $guarded = ['id'];
- // Memanggil isi DB Dengan primarykey
-//  protected $primaryKey = 'Nim';
-/**
- * The attributes that are mass assignable.
- *
- *  @var array
-*/
-// protected $fillable = [
-//     'Nim',
-//     'Nama',
-//     'ttl',
-//     'Kelas',
-//     'kelas_id',
-//     'Jurusan',
-//     'No_Handphone',
-//     'Email'
-//     ];
-public function kelas(){
-    return $this->belongsTo(Kelas::class,'kelas_id', 'id');
-}
-public function matakuliah(){
-        return $this->belongsToMany(Matakuliah::class, Mahasiswa_MataKuliah::class)->withPivot('nilai');
+    use HasFactory;
+    protected $table = "mahasiswas";
+    protected $guarded = ['id'];
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
+    }
+
+
+    public function mahasiswaMatakuliah()
+    {
+        return $this->hasMany(mahasiswaMatakuliah::class);
     }
 };

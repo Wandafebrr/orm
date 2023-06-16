@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Article;
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -86,10 +86,10 @@ class ArticleController extends Controller
     {
         //
     }
-    // public function cetak_pdf()
-    // {
-    //     $articles = Article::all();
-    //     $pdf = Pdf::loadView('articles.articles_pdf', ['articles' => $articles]);
-    //     return $pdf->stream();
-    // }
+    public function cetak_pdf()
+    {
+        $articles = Article::all();
+        $pdf = PDF::loadView('articles.articles_pdf', ['articles' => $articles]);
+        return $pdf->stream();
+    }
 }

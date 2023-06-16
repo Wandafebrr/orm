@@ -33,6 +33,7 @@
  <tr>
  <th>Nim</th>
  <th>Nama</th>
+ <th>Foto</th>
  <th>Tanggal lahir</th>
  <th>Kelas</th>
  <th>Jurusan</th>

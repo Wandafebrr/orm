@@ -6,7 +6,8 @@ use App\Http\Requests\StoreMahasiswaRequest;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Models\Kelas;
-use App\Models\Mahasiswa_MataKuliah;
+use App\Models\mahasiswaMatakuliah;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class MahasiswaController extends Controller
 {
@@ -43,7 +44,27 @@ class MahasiswaController extends Controller
      */
     public function store(StoreMahasiswaRequest $request)
     {
-        Mahasiswa::create($request->validated());
+        $new_image = '';
+        if ($request->hasFile('image_profile')) {
+            $extension = $request->file('image_profile')->getClientOriginalExtension();
+            $request->file('image_profile')->move('storage/images/', $request->get('Nama') . '.' . $extension);
+            $new_image =  $request->get('Nama') . '.' . $extension;
+        }
+
+        Mahasiswa::create(
+            [
+            'Nim' => $request->get('Nim'),
+            'Nama' => $request->get('Nama'),
+            'ttl' => $request->get('ttl'),
+            'kelas_id' => $request->get('kelas_id'),
+            'Jurusan' =>$request->get('Jurusan') ,
+            'No_Handphone' => $request->get('No_Handphone'),
+            'image_profile'=> $new_image,
+            'Email' =>$request->get('Email')
+            ]
+        );
+
+
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa berhasil ditambahkan');
     }
 
@@ -77,7 +98,7 @@ class MahasiswaController extends Controller
     {
         //melakukan validasi data
  $request->validate([
-    'Nim' => 'required',
+            'Nim' => 'required',
             'Nama' => 'required',
             'ttl' => 'required',
             'Kelas' => 'required',
@@ -93,11 +114,19 @@ class MahasiswaController extends Controller
     $mahasiswa->No_Handphone = $request->get('No_Handphone');
     $mahasiswa->ttl = $request->get('ttl');
     $mahasiswa->Email = $request->get('Email');
-
+   if ($request->hasFile('image_profile')) {
+        $extension = $request->file('image_profile')->getClientOriginalExtension();
+        $request->file('image_profile')->move('storage/images/', $mahasiswa->Nama . '.' . $extension);
+        $mahasiswa->image_profile = $mahasiswa->Nama . '.' . $extension;
+    } else {
+        $mahasiswa->image_profile = 'default.png';
+    }
     $mahasiswa->save();
 
     $kelas = new Kelas;
     $kelas->id = $request->get('Kelas');
+
+
 
     $mahasiswa->kelas()->associate($kelas);
     $mahasiswa->save();
@@ -112,15 +141,26 @@ class MahasiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($Nim)
+    public function destroy(Mahasiswa $mahasiswa)
     {
-        //fungsi eloquent untuk menghapus data
-        // dd(Mahasiswa::find($id));
-        Mahasiswa::find($Nim)->delete();
-        return redirect()->route('mahasiswa.index')-> with('success', 'Mahasiswa Berhasil Dihapus');
+
+        $mahasiswa->delete();
+        return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa Berhasil Dihapus');
     }
+
     public function nilai(Mahasiswa $mahasiswa)
     {
         return view('mahasiswas.mahasiswa_nilai', compact('mahasiswa'));
+    }
+
+    public function cetak($id)
+    {
+        // $mahasiswa_id = Mahasiswa::where('Nim', $Nim)->pluck('id')->first();
+        // $mahasiswa = Mahasiswa::with('kelas', 'mahasiswaMatakuliah.matakuliah')->where('id', $mahasiswa_id)->first();
+        // $pdf = PDF::loadView('mahasiswas.mahasiswa_nilai', ['mahasiswa' => $mahasiswa]);
+        // return $pdf->stream();
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        $pdf = PDF::loadView('mahasiswas.cetak_pdf', compact('mahasiswa'));
+        return $pdf->stream('document.pdf');
     }
 };

@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::resource('mahasiswa', MahasiswaController::class);
-
+Route::get('mahasiswa/cetak/{id}', [MahasiswaController::class, 'cetak'])->name('mahasiswa.cetak');
 Route::get('mahasiswa/{mahasiswa}/nilai', [MahasiswaController::class, 'nilai'])->name('mahasiswa.nilai');
 Route::resource('articles',ArticleController::class);
 Route::get('/article/cetak_pdf',[ArticleController::class,'cetak_pdf']);

@@ -29,6 +29,7 @@ class StoreMahasiswaRequest extends FormRequest
             'Jurusan' => 'required',
             'No_Handphone' => 'required',
             'ttl' => 'required',
+            'image_profile' => '|image|mimes:jpg,png,jpeg|'
         ];
     }
 }
